@@ -3,7 +3,7 @@ local diagnostics = require("ai_review.diagnostics")
 
 local M = {}
 
-local function handle_response(response, buf)
+local function handle_response(response, buf, is_long)
   local json = require("config.json")
 
   local decoded, err = json.decode(response)
@@ -34,11 +34,15 @@ local function handle_response(response, buf)
   end
 
   vim.schedule(function()
+    if is_long then
+      diagnostics.show_buffer_tips(decoded_reply, buf)
+      return
+    end 
     diagnostics.show_virtual_text_tips(decoded_reply, buf)
   end)
 end
 
-function M.ask_groq(api_key, prompt)
+function M.ask_groq(api_key, prompt, is_long)
   local url = "https://api.groq.com/openai/v1/chat/completions"
   local request_body = {
     model = "llama-3.3-70b-versatile",
@@ -76,7 +80,7 @@ function M.ask_groq(api_key, prompt)
         return
       end
 
-      handle_response(response, buf)
+      handle_response(response, buf, is_long)
     end,
   }):start()
 end

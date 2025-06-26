@@ -1,3 +1,6 @@
-vim.api.nvim_create_user_command("AIReviewAsk", function()
-  require("ai_review").ask()
+vim.api.nvim_create_user_command("AIReviewInline", function()
+  require("ai_review").ask_inline()
+end, {})
+vim.api.nvim_create_user_command("AIReviewLong", function()
+  require("ai_review").ask_long()
 end, {})
