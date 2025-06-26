@@ -9,7 +9,7 @@ function M.compose_prompt_from_current_buffer()
     lines[i] = tostring(i) .. ": " .. line
   end
   local full_text = table.concat(lines, "\n")
-  return config.prompt_base .. full_text
+  return config.get_prompt_base() .. full_text
 end
 
 return M

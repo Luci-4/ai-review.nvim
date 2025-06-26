@@ -1,5 +1,4 @@
 local Job = require("plenary.job")
-local prompt = require("ai_review.prompt")
 local diagnostics = require("ai_review.diagnostics")
 
 local M = {}
@@ -19,7 +18,6 @@ local function handle_response(response, buf)
       and decoded.choices[1]
       and decoded.choices[1].message
       and decoded.choices[1].message.content
-
   if not reply then
     vim.schedule(function()
       vim.notify("Unexpected API response format.", vim.log.levels.ERROR)
@@ -40,13 +38,12 @@ local function handle_response(response, buf)
   end)
 end
 
-function M.ask_groq(api_key)
-  local input = prompt.compose_prompt_from_current_buffer()
+function M.ask_groq(api_key, prompt)
   local url = "https://api.groq.com/openai/v1/chat/completions"
   local request_body = {
     model = "llama-3.3-70b-versatile",
     messages = {
-      { role = "user", content = input },
+      { role = "user", content = prompt },
     },
   }
 

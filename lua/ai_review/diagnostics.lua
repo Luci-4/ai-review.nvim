@@ -3,7 +3,6 @@ local ns_id = vim.api.nvim_create_namespace("ai_review_virtual_text")
 local M = {}
 
 function M.setup()
-  -- Setup highlight groups
   vim.api.nvim_set_hl(0, "AiReviewPrintArrow", {
     fg = "#40E0D0",
     bold = true,
@@ -16,7 +15,7 @@ function M.setup()
     underline = true,
   })
 
-  -- Refresh highlights on colorscheme change
+
   vim.api.nvim_create_autocmd("ColorScheme", {
     pattern = "*",
     callback = function()
