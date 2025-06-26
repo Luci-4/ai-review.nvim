@@ -2,6 +2,11 @@ local M = {
   api_key = vim.env.GROQ_API_KEY or "",
   attributes = "readability, efficiency, best practices, maintainability, clarity",
   tip_character = "Your tips should be non-obvious, assume I'm already an advanced programmer.",
+  model = "llama-3.3-70b-versatile",
+  api_url = "https://api.groq.com/openai/v1/chat/completions",
+  virtual_text_prefix = "→ ",
+  virtual_text_hl = "AiReviewDiagnosticHint",
+  buffer_highlight = "AiReviewPrintArrow",
 }
 local default_prompt_start = [[
 You are acting as a programming teacher and reviewer.
@@ -64,6 +69,11 @@ function M.setup(opts)
   M.api_key = opts.api_key or M.api_key
   M.attributes = opts.attributes or M.attributes
   M.tip_character = opts.tip_character or M.tip_character
+  M.model = opts.model or M.model
+  M.api_url = opts.api_url or M.api_url
+  M.virtual_text_prefix = opts.virtual_text_prefix or M.virtual_text_prefix
+  M.virtual_text_hl = opts.virtual_text_hl or M.virtual_text_hl
+  M.buffer_highlight = opts.buffer_highlight or M.buffer_highlight
 end
 
 function M.get_prompt_base(is_long)

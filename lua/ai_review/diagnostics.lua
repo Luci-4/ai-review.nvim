@@ -34,12 +34,13 @@ function M.setup()
 end
 
 function M.show_virtual_text_tips(diagnostics, buf)
+  local config = require("ai_review.config")
   vim.api.nvim_buf_clear_namespace(buf, ns_id, 0, -1)
   for _, diag in ipairs(diagnostics) do
     vim.api.nvim_buf_set_extmark(buf, ns_id, diag.line - 1, 0, {
       virt_text = {
-        { "→ ", "Normal" },
-        { diag.message, "AiReviewDiagnosticHint" },
+        { config.virtual_text_prefix, "Normal" },
+        { diag.message, config.virtual_text_hl },
       },
       virt_text_pos = "eol",
     })
@@ -49,6 +50,7 @@ end
 local message_mappings = {}
 
 function M.show_buffer_tips(messages, source_bufnr)
+  local config = require("ai_review.config")
   vim.cmd('vsplit')
 
   local info_buf = vim.api.nvim_create_buf(false, true)
@@ -83,7 +85,7 @@ function M.show_buffer_tips(messages, source_bufnr)
   for i, line in ipairs(lines) do
     local start_pos, end_pos = line:find("%[line %d+%]")
     if start_pos and end_pos then
-      vim.api.nvim_buf_add_highlight(info_buf, -1, "AiReviewPrintArrow", i - 1, start_pos - 1, end_pos)
+      vim.api.nvim_buf_add_highlight(info_buf, -1, config.buffer_highlight, i - 1, start_pos - 1, end_pos)
     end
   end
   vim.bo[info_buf].buftype = 'nofile'

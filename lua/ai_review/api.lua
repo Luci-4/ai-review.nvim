@@ -43,9 +43,9 @@ local function handle_response(response, buf, is_long)
 end
 
 function M.ask_groq(api_key, prompt, is_long)
-  local url = "https://api.groq.com/openai/v1/chat/completions"
+  local config = require("ai_review.config")
   local request_body = {
-    model = "llama-3.3-70b-versatile",
+    model = config.model,
     messages = {
       { role = "user", content = prompt },
     },
