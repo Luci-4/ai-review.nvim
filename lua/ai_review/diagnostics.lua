@@ -47,6 +47,10 @@ function M.show_virtual_text_tips(diagnostics, buf)
   end
 end
 
+function M.clear_virtual_text(buf)
+  vim.api.nvim_buf_clear_namespace(buf, ns_id, 0, -1)
+end
+
 local message_mappings = {}
 
 function M.show_buffer_tips(messages, source_bufnr)

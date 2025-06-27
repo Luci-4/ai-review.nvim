@@ -27,5 +27,9 @@ function M.ask_long()
   ask(true)
 end
 
+function M.clear_hints()
+  local diagnostics = require("ai_review.diagnostics")
+  diagnostics.clear_virtual_text(vim.api.nvim_get_current_buf())
+end
 
 return M
