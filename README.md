@@ -5,10 +5,11 @@ A Neovim plugin that provides AI-powered code review using Groq's API.
 
 ## Features
 
-- Get inline code review suggestions as virtual text
-- Get detailed code review in a split buffer
-- Jump to relevant lines from review suggestions
-- Customizable prompts and display options
+- **Inline Suggestions**: Get quick code review hints as virtual text
+- **Detailed Review**: Get comprehensive feedback in a split buffer
+- **Navigation**: Jump directly to relevant lines from review suggestions
+- **Customizable**: Configure review focus areas and display options
+- **Multi-model Support**: Works with various Groq models (default: llama-3.3-70b)
 
 ### Inline Suggestions
 ![Screenshot (1057)](https://github.com/user-attachments/assets/74350698-a720-4a18-8dc9-22dff525565c)
@@ -18,6 +19,12 @@ A Neovim plugin that provides AI-powered code review using Groq's API.
 
 ## Installation
 
+### Requirements
+- Neovim 0.9.0 or higher
+- curl (for API requests)
+- [Groq API key](https://console.groq.com/keys) (free tier available)
+  
+### Package Managers
 Using packer.nvim:
 
 ```lua
@@ -43,6 +50,16 @@ Using lazy.nvim:
 }
 ```
 
+
+### Dependencies
+This plugin uses a local copy of `json.lua` from:
+- [rxi/json.lua](https://github.com/rxi/json.lua)
+
+The file should be placed in your Neovim config's `lua/config/json.lua` path
+to function properly. This is not automatically installed - you'll need to:
+1. Download json.lua from the repository
+2. Place it at `.../nvim/lua/config/json.lua`
+   
 ## Configuration
 ```lua
 require('ai-review').setup({
@@ -65,21 +82,10 @@ require('ai-review').setup({
 
 " Get detailed review in a split buffer
 :AIReviewLong
+
+" Clear all inline suggestions
+:AIReviewClear	
 ```
-
-## Requirements
-- Neovim 0.9.0 or higher
-- curl (for API requests)
-- Groq API key (free tier available) https://console.groq.com/keys
-
-## Dependencies
-This plugin uses a local copy of `json.lua` from:
-- [rxi/json.lua](https://github.com/rxi/json.lua)
-
-The file should be placed in your Neovim config's `lua/config/json.lua` path
-to function properly. This is not automatically installed - you'll need to:
-1. Download json.lua from the repository
-2. Place it at `.../nvim/lua/config/json.lua`
 
 ## Known Issues
 - Errors may not always be handled gracefully, so if AI returns something stupid expect a lot of red
