@@ -64,7 +64,7 @@ function M.ask_groq(api_key, prompt, is_long)
       "-H", "Content-Type: application/json",
       "-H", "Authorization: Bearer " .. api_key,
       "-d", body_json,
-      url,
+      config.api_url,
     },
     on_exit = function(j, return_val)
       local response = table.concat(j:result(), "\n")
